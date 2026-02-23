@@ -1,13 +1,15 @@
-# models
-*.h5
-*.keras
-
 # data
 data/
 PetImages/
 
+# big models (ignore only VGG)
+vgg_aug.keras
+vgg_noaug.keras
+
 # python
 __pycache__/
 *.pyc
+
+# ignore HEIC
 *.HEIC
 *.heic
