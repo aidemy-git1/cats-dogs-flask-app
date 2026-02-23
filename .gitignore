@@ -9,3 +9,5 @@ PetImages/
 # python
 __pycache__/
 *.pyc
+*.HEIC
+*.heic
