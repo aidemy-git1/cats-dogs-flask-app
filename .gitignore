@@ -1,0 +1,11 @@
+# models
+*.h5
+*.keras
+
+# data
+data/
+PetImages/
+
+# python
+__pycache__/
+*.pyc
