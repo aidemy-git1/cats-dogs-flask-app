@@ -6,21 +6,30 @@ import os
 
 app = Flask(__name__)
 
-model = tf.keras.models.load_model("mobilenet_aug.keras")
-
 IMG_SIZE = 224
+model = None  # ← ここ重要
+
+
+def get_model():
+    global model
+    if model is None:
+        model = tf.keras.models.load_model("mobilenet_aug.keras")
+    return model
+
 
 def predict_image(image_path):
     img = Image.open(image_path).resize((IMG_SIZE, IMG_SIZE))
     img_array = np.array(img) / 255.0
     img_array = np.expand_dims(img_array, axis=0)
 
+    model = get_model()  # ← ここで初めてロード
     prediction = model.predict(img_array)[0][0]
 
     if prediction > 0.5:
         return "Dog", prediction
     else:
         return "Cat", 1 - prediction
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -37,5 +46,6 @@ def index():
 
     return render_template("index.html", result=result)
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
