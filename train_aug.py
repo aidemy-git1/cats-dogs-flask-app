@@ -58,8 +58,9 @@ history = model.fit(
     epochs=5
 )
 
-# 保存
-model.save("mobilenet_2.keras")
+# 保存（SavedModel形式：フォルダができる）
+model.export("mobilenet_aug_savedmodel")
+print("SavedModel exported: mobilenet_aug_savedmodel")
 
 print("モデル保存完了！")
 
