@@ -11,8 +11,10 @@
         <input type="submit" value="判定する">
     </form>
 
-    {% if result %}
-        <h2>結果: {{ result }}</h2>
-    {% endif %}
-</body>
-</html>
+   {% if result %}
+  <h2>結果: {{ result }}</h2>
+{% endif %}
+
+{% if error %}
+  <p style="color:red;">{{ error }}</p>
+{% endif %}
