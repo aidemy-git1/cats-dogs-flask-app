@@ -3,7 +3,6 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import os
-from keras.layers import TFSMLayer
 
 app = Flask(__name__)
 
@@ -14,8 +13,7 @@ model = None  # ← ここ重要
 def get_model():
     global model
     if model is None:
-        # SavedModelを推論用Layerとして読み込む
-        model = TFSMLayer("mobilenet_aug_savedmodel", call_endpoint="serve")
+        model = tf.keras.models.load_model("mobilenet_aug_savedmodel")
     return model
 
 
@@ -32,6 +30,7 @@ def predict_image(image_path):
     else:
         return "Cat", 1 - prediction
 
+# updated for savedmodel deploy
 
 @app.route("/", methods=["GET", "POST"])
 def index():
