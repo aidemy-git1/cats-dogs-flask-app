@@ -2,7 +2,6 @@ import tensorflow as tf
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import matplotlib.pyplot as plt
 
 # パラメータ
 IMG_SIZE = 224
@@ -63,8 +62,3 @@ print("Saved: mobilenet_aug.keras")
 
 print("モデル保存完了！")
 
-# グラフ表示
-plt.plot(history.history['accuracy'], label='train')
-plt.plot(history.history['val_accuracy'], label='valid')
-plt.legend()
-plt.show()
