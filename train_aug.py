@@ -12,7 +12,6 @@ valid_dir = 'data/valid'
 
 # データ拡張
 train_datagen = ImageDataGenerator(rescale=1./255)
-
 valid_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
@@ -29,36 +28,23 @@ valid_generator = valid_datagen.flow_from_directory(
     class_mode='binary'
 )
 
-# ベースモデル
 base_model = MobileNetV2(
     input_shape=(IMG_SIZE, IMG_SIZE, 3),
     include_top=False,
     weights='imagenet'
 )
+base_model.trainable = False
 
-base_model.trainable = False  # 転移学習（凍結）
-
-# モデル構築
 model = models.Sequential([
     base_model,
     layers.GlobalAveragePooling2D(),
     layers.Dense(1, activation='sigmoid')
 ])
 
-model.compile(
-    optimizer='adam',
-    loss='binary_crossentropy',
-    metrics=['accuracy']
-)
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-history = model.fit(
-    train_generator,
-    validation_data=valid_generator,
-    epochs=5
-)
+history = model.fit(train_generator, validation_data=valid_generator, epochs=5)
 
 model.save("mobilenet_aug.keras")
 print("Saved: mobilenet_aug.keras")
-
 print("モデル保存完了！")
-
